@@ -2,7 +2,7 @@
 
 Using:
 
-1- Modify the checksum in the playbook.
+1- Modify the task "Compare the checksum" with the desire checksum.
 
 2- excecute the following command
 
