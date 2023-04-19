@@ -7,5 +7,5 @@ Using:
 2- excecute the following command
 
 ```
-ansible-playbook sui-tn-code-upgrade.yml
+ansible-playbook --ask-sudo-pass sui-tn-code-upgrade.yml 
 ```

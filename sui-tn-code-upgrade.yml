@@ -1,24 +1,65 @@
 ---
  - hosts: localhost
 
+   vars:
+     expected_checksum: a8f6c084ec2ffe8de7a8de29a42dc0ccd36256e2
+     dest_path: /Users/krips/src/sui
+     node_service_name: sui-node
+     binary_source: /Users/krips/src/sui/target/release/sui-node
+     binary_dest: /opt/sui/bin/sui-node
+
 
    tasks:
 
-   - name: Delete sui directory directory
+   - name: 1- Delete sui directory directory
      file: 
-      path: /Users/krips/src/sui
+      path: "{{ dest_path }}"
       state: absent
 
-   - name: Clone sui github repository for testnet
+   - name: 2- Clone sui github repository for testnet
      git:
        repo: https://github.com/kr1ps/neworb.git
-       dest: /Users/krips/src/sui
+       dest: "{{ dest_path }}"
        version: circleci-project-setup
   
-   - name: Compare the checksum
-     ansible.builtin.command: ./compare.sh "cd /Users/krips/src/sui && git rev-parse HEAD" "a8f6c084ec2ffe8de7a8de29a42dc0ccd36256e2"
-     register: result
-   - debug:
-       var: result.stdout
+   - name: 3- Compare the checksum
+     ansible.builtin.command: ./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
+     register: compare
+   - name: show output for compare
+     debug: 
+       var: compare.stdout
 
-    
+   - name: 4- Update sui-client
+     ansible.builtin.command: cd "{{ dest_path }}" && cargo build --bin sui --release
+     register: sui_client
+   - name: show output for update sui-client
+     debug: 
+       var: sui_client.stdout
+
+   - name: 5- Update sui-node
+     ansible.builtin.command: cd "{{ dest_path }}" && cargo build --release --bin sui-node
+     register: sui_node
+   - name: show output for update sui-node
+     debug: 
+       var: sui_node.stdout
+
+   - name: 6- Stop Node Service if running
+     become: true
+     ansible.builtin.systemd:
+       name: "{{ node_service_name }}"
+       state: stopped
+       
+   - name: 7- Copy binary
+     become: true
+     ansible.builtin.copy:
+       src: "{{ binary_source }}"
+       dest: "{{ binary_dest }}"
+       force: yes
+       
+   - name: 8- Start Node Service
+     become: true
+     ansible.builtin.systemd:
+       name: "{{ node_service_name }}"
+       state: started
+       
+
