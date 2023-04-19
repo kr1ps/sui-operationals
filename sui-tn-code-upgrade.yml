@@ -16,7 +16,7 @@
       path: "{{ dest_path }}"
       state: absent
 
-   - name: 2- Clone sui github repository for testnet
+   - name: 2- Clone sui github repository for testnet branch
      git:
        repo: https://github.com/kr1ps/neworb.git
        dest: "{{ dest_path }}"
