@@ -1,0 +1,24 @@
+---
+ - hosts: localhost
+
+
+   tasks:
+
+   - name: Delete sui directory directory
+     file: 
+      path: /Users/krips/src/sui
+      state: absent
+
+   - name: Clone sui github repository for testnet
+     git:
+       repo: https://github.com/kr1ps/neworb.git
+       dest: /Users/krips/src/sui
+       version: circleci-project-setup
+  
+   - name: Compare the checksum
+     ansible.builtin.command: ./compare.sh "cd /Users/krips/src/sui && git rev-parse HEAD" "a8f6c084ec2ffe8de7a8de29a42dc0ccd36256e2"
+     register: result
+   - debug:
+       var: result.stdout
+
+    
