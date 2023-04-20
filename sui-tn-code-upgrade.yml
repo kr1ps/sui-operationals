@@ -30,14 +30,18 @@
        var: compare.stdout
 
    - name: 4- Update sui-client
-     ansible.builtin.command: 'cd /home/tddr/sui/ && cargo build --bin sui --release'
+     ansible.builtin.shell:
+      cmd: cargo build --bin sui --release
+      chdir: "{{ dest_path }}"
      register: sui_client
    - name: show output for update sui-client
      debug: 
        var: sui_client.stdout
 
    - name: 5- Update sui-node
-     ansible.builtin.command: 'cd /home/tddr/sui/ && cargo build --release --bin sui-node'
+     ansible.builtin.shell:
+      cmd: cargo build --release --bin sui-node
+      chdir: "{{ dest_path }}"
      register: sui_node
    - name: show output for update sui-node
      debug: 
