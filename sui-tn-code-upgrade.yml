@@ -2,7 +2,7 @@
  - hosts: localhost
 
    vars:
-     expected_checksum: a8f6c084ec2ffe8de7a8de29a42dc0ccd36256e2
+     expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
      dest_path: /home/tddr/sui
      node_service_name: sui-node
      binary_source: /home/tddr/sui/target/release/sui-node
@@ -30,14 +30,14 @@
        var: compare.stdout
 
    - name: 4- Update sui-client
-     ansible.builtin.command: cd "{{ dest_path }}" && cargo build --bin sui --release
+     ansible.builtin.command: cd "{{ dest_path }}" && "cargo build --bin sui --release"
      register: sui_client
    - name: show output for update sui-client
      debug: 
        var: sui_client.stdout
 
    - name: 5- Update sui-node
-     ansible.builtin.command: cd "{{ dest_path }}" && cargo build --release --bin sui-node
+     ansible.builtin.command: cd "{{ dest_path }}" && "cargo build --release --bin sui-node"
      register: sui_node
    - name: show output for update sui-node
      debug: 
