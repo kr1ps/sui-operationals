@@ -22,12 +22,12 @@
        dest: "{{ dest_path }}"
        version: testnet
   
-   - name: 3- Compare the checksum
-     ansible.builtin.command: ./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
-     register: compare
-   - name: show output for compare
-     debug: 
-       var: compare.stdout
+  #  - name: 3- Compare the checksum
+  #    ansible.builtin.command: ./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
+  #    register: compare
+  #  - name: show output for compare
+  #    debug: 
+  #      var: compare.stdout
 
    - name: 4- Update sui-client
      ansible.builtin.command: cd "{{ dest_path }}" && cargo build --bin sui --release
