@@ -3,9 +3,9 @@
 
    vars:
      expected_checksum: a8f6c084ec2ffe8de7a8de29a42dc0ccd36256e2
-     dest_path: /Users/krips/src/sui
+     dest_path: /home/tddr/sui
      node_service_name: sui-node
-     binary_source: /Users/krips/src/sui/target/release/sui-node
+     binary_source: /home/tddr/sui/target/release/sui-node
      binary_dest: /opt/sui/bin/sui-node
 
 
@@ -18,9 +18,9 @@
 
    - name: 2- Clone sui github repository for testnet branch
      git:
-       repo: https://github.com/kr1ps/neworb.git
+       repo: https://github.com/MystenLabs/sui.git
        dest: "{{ dest_path }}"
-       version: circleci-project-setup
+       version: testnet
   
    - name: 3- Compare the checksum
      ansible.builtin.command: ./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
