@@ -8,6 +8,7 @@
      binary_source: ~/sui/target/release/sui-node
      binary_dest: /opt/sui/bin/sui-node
      script_source: compare.sh
+     script_dest: ~/sui/compare.sh
 
 
    tasks:
@@ -27,7 +28,7 @@
      become: true
      ansible.builtin.copy:
        src: "{{ script_source }}"
-       dest: "{{ dest_path }}"
+       dest: "{{ script_dest }}"
        force: yes
 
    - name: 3- Compare the checksum
