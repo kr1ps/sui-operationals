@@ -4,7 +4,7 @@
    vars:
      #expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
      #branch_target: testnet
-     dest_path: ~/sui
+     dest_path: /home/krips/sui
      node_service_name: sui-node
      binary_source: ~/sui/target/release/sui-node
      binary_dest: /opt/sui/bin/sui-node
