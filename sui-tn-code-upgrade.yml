@@ -28,7 +28,6 @@
      ansible.builtin.copy:
        src: "{{ script_source }}"
        dest: "{{ dest_path }}"
-       remote_src: yes
        force: yes
 
    - name: 3- Compare the checksum
