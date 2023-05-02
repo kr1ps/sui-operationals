@@ -7,7 +7,7 @@
      node_service_name: sui-node
      binary_source: ~/sui/target/release/sui-node
      binary_dest: /opt/sui/bin/sui-node
-     script_source: ./compare.sh
+     script_source: compare.sh
 
 
    tasks:
