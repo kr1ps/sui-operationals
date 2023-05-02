@@ -25,7 +25,6 @@
        version: testnet
 
    - name: 7- Copy script
-     become: true
      ansible.builtin.copy:
        src: "{{ script_source }}"
        dest: "{{ script_dest }}"
