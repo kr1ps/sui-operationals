@@ -2,7 +2,7 @@
  - hosts: all
 
    vars:
-     expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
+     #expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
      dest_path: ~/sui
      node_service_name: sui-node
      binary_source: ~/sui/target/release/sui-node
@@ -24,21 +24,21 @@
        dest: "{{ dest_path }}"
        version: testnet
 
-   - name: 7- Copy script
+   - name: 3- Copy script
      ansible.builtin.copy:
        src: "{{ script_source }}"
        dest: "{{ script_dest }}"
        mode: a+x
        force: yes
 
-   - name: 3- Compare the checksum
+   - name: 4- Compare the checksum
      ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
      register: compare
    - name: show output for compare
      debug: 
        var: compare.stdout
 
-   - name: 4- Update sui-client
+   - name: 5- Update sui-client
      ansible.builtin.shell:
       cmd: cargo build --bin sui --release
       chdir: "{{ dest_path }}"
@@ -47,7 +47,7 @@
      debug: 
        var: sui_client.stdout
 
-   - name: 5- Update sui-node
+   - name: 6- Update sui-node
      ansible.builtin.shell:
       cmd: cargo build --release --bin sui-node
       chdir: "{{ dest_path }}"
@@ -56,20 +56,20 @@
      debug: 
        var: sui_node.stdout
 
-   - name: 6- Stop Node Service if running
+   - name: 7- Stop Node Service if running
      become: true
      ansible.builtin.systemd:
        name: "{{ node_service_name }}"
        state: stopped
        
-   - name: 7- Copy binary
+   - name: 8- Copy binary
      become: true
      ansible.builtin.copy:
        src: "{{ binary_source }}"
        dest: "{{ binary_dest }}"
        force: yes
        
-   - name: 8- Start Node Service
+   - name: 9- Start Node Service
      become: true
      ansible.builtin.systemd:
        name: "{{ node_service_name }}"
