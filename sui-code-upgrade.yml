@@ -35,28 +35,26 @@
    - name: 4- Compare the checksum
      ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
      register: compare
-   - name: show output for compare
-     debug: 
-       var: compare.stdout
-
+   - debug: msg="{{ compare.stdout }}"
+   - debug: msg="{{ compare.stderr }}"
+  
    - name: 5- Update sui-client
      ansible.builtin.shell:
       cmd: /home/tddr/.cargo/bin/cargo build --bin sui --release
       chdir: "{{ dest_path }}"
      register: sui_client
-   - name: show output for update sui-client
-     debug: 
-       var: sui_client.stdout
-
+   - debug: msg="{{ sui_client.stdout }}"
+   - debug: msg="{{ sui_client.stderr }}"
+   
+   
    - name: 6- Update sui-node
      ansible.builtin.shell:
       cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node
       chdir: "{{ dest_path }}"
      register: sui_node
-   - name: show output for update sui-node
-     debug: 
-       var: sui_node.stdout
-
+   - debug: msg="{{ sui_node.stdout }}"
+   - debug: msg="{{ sui_node.stderr }}"
+   
    - name: 7- Stop Node Service if running
      become: true
      ansible.builtin.systemd:
