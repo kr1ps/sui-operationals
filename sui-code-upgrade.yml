@@ -15,12 +15,12 @@
    tasks:
 
    - name: 1- Delete sui directory directory
-     file: 
+     ansible.builtin.file: 
       path: "{{ dest_path }}"
       state: absent
 
    - name: 2- Clone sui github repository for testnet branch
-     git:
+     ansible.builtin.git:
        repo: https://github.com/MystenLabs/sui.git
        dest: "{{ dest_path }}"
        version: "{{ branch_target }}"
@@ -40,18 +40,18 @@
        var: compare.stdout
 
    - name: 5- Update sui-client
-     ansible.builtin.shell:
-      cmd: cargo build --bin sui --release
-      chdir: "{{ dest_path }}"
+     ansible.builtin.command: cargo build --bin sui --release
+     args:
+       chdir: "{{ dest_path }}"
      register: sui_client
    - name: show output for update sui-client
      debug: 
        var: sui_client.stdout
 
    - name: 6- Update sui-node
-     ansible.builtin.shell:
-      cmd: cargo build --release --bin sui-node
-      chdir: "{{ dest_path }}"
+     ansible.builtin.command: cargo build --release --bin sui-node
+     args:
+       chdir: "{{ dest_path }}"
      register: sui_node
    - name: show output for update sui-node
      debug: 
