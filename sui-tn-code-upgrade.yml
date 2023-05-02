@@ -28,6 +28,7 @@
      ansible.builtin.copy:
        src: "{{ script_source }}"
        dest: "{{ script_dest }}"
+       mode: a+x
        force: yes
 
    - name: 3- Compare the checksum
