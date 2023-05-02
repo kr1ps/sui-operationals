@@ -31,8 +31,7 @@
        force: yes
 
    - name: 3- Compare the checksum
-     ansible.builtin.command: ./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
-     chdir: "{{ dest_path }}"
+     ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
      register: compare
    - name: show output for compare
      debug: 
