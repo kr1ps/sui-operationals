@@ -1,11 +1,11 @@
 ---
- - hosts: localhost
+ - hosts: all
 
    vars:
      expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
-     dest_path: /home/tddr/sui
+     dest_path: ~/sui
      node_service_name: sui-node
-     binary_source: /home/tddr/sui/target/release/sui-node
+     binary_source: ~/sui/target/release/sui-node
      binary_dest: /opt/sui/bin/sui-node
 
 
