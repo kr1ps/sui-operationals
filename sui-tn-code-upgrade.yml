@@ -3,6 +3,7 @@
 
    vars:
      #expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
+     #branch_target: testnet
      dest_path: ~/sui
      node_service_name: sui-node
      binary_source: ~/sui/target/release/sui-node
@@ -22,7 +23,7 @@
      git:
        repo: https://github.com/MystenLabs/sui.git
        dest: "{{ dest_path }}"
-       version: testnet
+       version: "{{ branch_target }}"
 
    - name: 3- Copy script
      ansible.builtin.copy:
