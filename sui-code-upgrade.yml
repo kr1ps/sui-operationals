@@ -14,44 +14,44 @@
 
    tasks:
 
-  #  - name: 1- Delete sui directory directory
-  #    ansible.builtin.file: 
-  #     path: "{{ dest_path }}"
-  #     state: absent
+   - name: 1- Delete sui directory directory
+     ansible.builtin.file: 
+      path: "{{ dest_path }}"
+      state: absent
 
-  #  - name: 2- Clone sui github repository for testnet branch
-  #    ansible.builtin.git:
-  #      repo: https://github.com/MystenLabs/sui.git
-  #      dest: "{{ dest_path }}"
-  #      version: "{{ branch_target }}"
+   - name: 2- Clone sui github repository for testnet branch
+     ansible.builtin.git:
+       repo: https://github.com/MystenLabs/sui.git
+       dest: "{{ dest_path }}"
+       version: "{{ branch_target }}"
 
-  #  - name: 3- Copy script
-  #    ansible.builtin.copy:
-  #      src: "{{ script_source }}"
-  #      dest: "{{ script_dest }}"
-  #      mode: a+x
-  #      force: yes
+   - name: 3- Copy script
+     ansible.builtin.copy:
+       src: "{{ script_source }}"
+       dest: "{{ script_dest }}"
+       mode: a+x
+       force: yes
 
-  #  - name: 4- Compare the checksum
-  #    ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
-  #    register: compare
-  #  - debug: msg="{{ compare.stdout }}"
+   - name: 4- Compare the checksum
+     ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
+     register: compare
+   - debug: msg="{{ compare.stdout }}"
    
   
-  #  - name: 5- Update sui-client
-  #    ansible.builtin.shell:
-  #     cmd: /home/tddr/.cargo/bin/cargo build --bin sui --release
-  #     chdir: "{{ dest_path }}"
-  #    register: sui_client
-  #  - debug: msg="{{ sui_client.stderr }}"
+   - name: 5- Update sui-client
+     ansible.builtin.shell:
+      cmd: /home/tddr/.cargo/bin/cargo build --bin sui --release
+      chdir: "{{ dest_path }}"
+     register: sui_client
+   - debug: msg="{{ sui_client.stderr }}"
    
    
-  #  - name: 6- Update sui-node
-  #    ansible.builtin.shell:
-  #     cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node
-  #     chdir: "{{ dest_path }}"
-  #    register: sui_node
-  #  - debug: msg="{{ sui_node.stderr }}"
+   - name: 6- Update sui-node
+     ansible.builtin.shell:
+      cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node
+      chdir: "{{ dest_path }}"
+     register: sui_node
+   - debug: msg="{{ sui_node.stderr }}"
    
    - name: 7- Stop Node Service if running
      become: true
