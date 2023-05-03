@@ -64,6 +64,7 @@
      ansible.builtin.copy:
        src: "{{ binary_source }}"
        dest: "{{ binary_dest }}"
+       remote_src: true
        force: yes
        
    - name: 9- Start Node Service
