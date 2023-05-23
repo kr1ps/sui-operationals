@@ -48,7 +48,7 @@
    
    - name: 6- Update sui-node
      ansible.builtin.shell:
-      cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node
+      cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node -j 48
       chdir: "{{ dest_path }}"
      register: sui_node
    - debug: msg="{{ sui_node.stderr }}"
