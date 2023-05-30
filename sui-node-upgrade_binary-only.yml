@@ -16,7 +16,7 @@
    
    - name: 1- download the binary for sui-node repository for testnet branch
      ansible.builtin.get_url:
-       url: "{{ sui-node_url }}"
+       url: "{{ sui_node_url }}"
        dest: "{{ dest_path }}"
        mode: a+x
 
