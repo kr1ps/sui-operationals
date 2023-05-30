@@ -1,0 +1,47 @@
+---
+ - hosts: all
+
+   vars:
+     #expected_checksum: 133fd85bcd79ed048a897be3a3f3bd4a2e9c616a
+     #branch_target: testnet
+     #sui-node_url: https://sui-releases.s3-accelerate.amazonaws.com/388f54bff04e056a5785e914cdee176d6fae8fd0/sui-node
+     dest_path: /home/tddr/sui
+     node_service_name: sui-node
+     binary_source: /home/tddr/sui/sui-node
+     binary_dest: /opt/sui/bin/sui-node
+     script_source: compare.sh
+     script_dest: ~/sui/compare.sh
+     
+
+
+   tasks:
+
+   
+   - name: 1- download the binary for sui-node repository for testnet branch
+     ansible.builtin.get_url:
+       url: "{{ sui-node_url }}"
+       dest: "{{ dest_path }}"
+       mode: a+x
+
+      
+   - name: 2- Stop Node Service if running
+     become: true
+     ansible.builtin.systemd:
+       name: "{{ node_service_name }}"
+       state: stopped
+       
+   - name: 3- Copy binary
+     become: true
+     ansible.builtin.copy:
+       src: "{{ binary_source }}"
+       dest: "{{ binary_dest }}"
+       remote_src: true
+       force: yes
+       
+   - name: 4- Start Node Service
+     become: true
+     ansible.builtin.systemd:
+       name: "{{ node_service_name }}"
+       state: started
+       
+
