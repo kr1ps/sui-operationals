@@ -9,9 +9,6 @@
      node_service_name: sui-node
      binary_source: /home/tddr/sui/sui-node
      binary_dest: /opt/sui/bin/sui-node
-     script_source: compare.sh
-     script_dest: ~/sui/compare.sh
-     
 
 
    tasks:
