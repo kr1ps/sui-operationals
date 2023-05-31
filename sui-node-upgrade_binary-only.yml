@@ -14,7 +14,7 @@
    tasks:
 
    
-   - name: 1- download the binary for sui-node repository for testnet branch
+   - name: 1- download the binary for sui-node on "{{ sui_node_url }}"
      ansible.builtin.get_url:
        url: "{{ sui_node_url }}"
        dest: "{{ dest_path }}"
