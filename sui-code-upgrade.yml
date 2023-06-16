@@ -35,7 +35,7 @@
    - name: 4- Compare the checksum
      ansible.builtin.command: ~/sui/./compare.sh 'cd "{{ dest_path }}" && git rev-parse HEAD' "{{ expected_checksum }}"
      register: compare
-   - debug: msg="{{ compare.stdout }}"
+   - debug: msg="{{ compare.stdout_lines }}"
    
   
    - name: 5- Update sui-client
@@ -43,7 +43,7 @@
       cmd: /home/tddr/.cargo/bin/cargo build --bin sui --release
       chdir: "{{ dest_path }}"
      register: sui_client
-   - debug: msg="{{ sui_client.stderr }}"
+   - debug: msg="{{ sui_client.stderr_lines }}"
    
    
    - name: 6- Update sui-node
@@ -51,7 +51,7 @@
       cmd: /home/tddr/.cargo/bin/cargo build --release --bin sui-node -j 48
       chdir: "{{ dest_path }}"
      register: sui_node
-   - debug: msg="{{ sui_node.stderr }}"
+   - debug: msg="{{ sui_node.stderr_lines }}"
    
    - name: 7- Stop Node Service if running
      become: true
